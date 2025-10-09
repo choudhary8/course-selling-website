@@ -1,0 +1,8 @@
+input,textarea{
+  margin: 0.35rem 0;
+  margin-bottom: 1.30rem;
+  padding:0.65rem;
+  border-radius: 8px;
+  background-color: black;
+  box-shadow: 0.5rem;
+}
