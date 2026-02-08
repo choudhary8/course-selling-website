@@ -1,8 +1,9 @@
-import http from 'http';
+// import http from 'http';
 import dotenv from 'dotenv'
 dotenv.config();
 import app from '../src/app';
 import mongoose from 'mongoose';
+import { asyncHandler } from '../src/utils/asyncHandler';
 
 const connectDb=async ()=>{
     try{
@@ -10,7 +11,7 @@ const connectDb=async ()=>{
         
         const db=await mongoose.connect(process.env.DB_URI||'');
         console.log('connected to db.');
-        const server=http.createServer(app);
+        // const server=http.createServer(app);
         // server.listen(process.env.PORT,()=>{
         //     console.log(`server listening at port ${process.env.PORT}`);
         // })
@@ -20,4 +21,7 @@ const connectDb=async ()=>{
     }
 }
 
-connectDb();
+export default asyncHandler (async (req:any, res:any)=>{
+    await connectDb();
+    return app(req,res);
+})
