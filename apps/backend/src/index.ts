@@ -8,8 +8,11 @@ import { errorHandler } from './middlewares/error.middlewares';
 
 
 try{
-    const db=mongoose.connect(process.env.DB_URI||'');
-    console.log(db);
+    const connectDb=async ()=>{
+        const db=await mongoose.connect(process.env.DB_URI||'');
+        console.log(db);
+    }
+    connectDb();
     const server=http.createServer(app);
     server.listen(process.env.PORT,()=>{
         console.log(`server listening at port ${process.env.PORT}`);
