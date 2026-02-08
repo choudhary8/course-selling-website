@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const users_controllers_1 = require("../controllers/users.controllers");
+const auth_middlewares_1 = require("../middlewares/auth.middlewares");
+const userRouter = (0, express_1.Router)();
+userRouter.post('/signup', users_controllers_1.userSignup);
+userRouter.post('/login', users_controllers_1.userLogin);
+userRouter.get('/courses', auth_middlewares_1.verifyJWT, users_controllers_1.getAllCourses);
+userRouter.post('/courses', auth_middlewares_1.verifyJWT, users_controllers_1.purchaseCourse);
+userRouter.get('/courses/purchasedCourses', auth_middlewares_1.verifyJWT, users_controllers_1.getPurchasedCourses);
+userRouter.get('/course/:courseId/lessons-list', auth_middlewares_1.verifyJWT, users_controllers_1.getLessonsList);
+exports.default = userRouter;

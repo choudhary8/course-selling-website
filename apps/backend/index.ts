@@ -1,7 +1,7 @@
 import http from 'http';
 import dotenv from 'dotenv'
 dotenv.config();
-import app from './app';
+import app from './src/app';
 import mongoose from 'mongoose';
 
 const connectDb=async ()=>{
