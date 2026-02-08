@@ -1,6 +1,8 @@
 import React, { useCallback } from "react"
 import { FaGraduationCap } from "react-icons/fa"
 import { createCourse} from "../services/create-course";
+import { errorHandler } from "../utils/errorHandler";
+import toast from "react-hot-toast";
 
 export const CourseCreation=()=>{
     const handleSubmit:React.FormEventHandler<HTMLFormElement>=useCallback(async(event)=>{
@@ -9,10 +11,11 @@ export const CourseCreation=()=>{
             const formData=new FormData(event.currentTarget);
             const res=await createCourse(formData);
             console.log(res);
-            
+            toast.success('Course created succefully');
         } catch (error) {
-            console.log(error);
+            const message=errorHandler(error,'Course creation failed')
             
+                 toast.error(message);
         }
     },[])
     return (

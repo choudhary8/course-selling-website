@@ -36,6 +36,8 @@ export const editCourse=asyncHandler(async(req:Request, res:Response)=>{
         new ApiResponse(200,{course},"img uploaded")
     )
 });
+
+
 export const createCourse=asyncHandler(async (req:Request, res:Response)=>{
     //get the inputs from frontend - userId, course details - title, image, descryption, price
     //validate the inputs
@@ -75,8 +77,6 @@ export const createCourse=asyncHandler(async (req:Request, res:Response)=>{
     const createdCourse=await Course.create(
         {...courseDetails, imageUrl, creator:creator._id}
     )
-    
-
     if(!createdCourse){
         throw new ApiError(500,"Error while creating the course")
     }
@@ -99,7 +99,43 @@ export const getAllCreatedCourses=asyncHandler(async(req:Request,res:Response)=>
     }
     
     return res.status(200).json(
-        new ApiResponse(200,user.createdCourses,"Created courses fetched successfully")
+        new ApiResponse(200,{courses:user.createdCourses},"Created courses fetched successfully")
     )
+})
+
+export const uploadLesson=asyncHandler(async(req,res,next)=>{
+     //get courseId 
+     //get video file path
+     //upload video on cloudinary
+     //get the cloudinary url
+     //save the lessoon in course
+     //return lesson
+
+     const {courseId,lessonName}=req.body;
+     const files=req.files as {lessonVideo:Express.Multer.File[]}
+     const videoPath=files?.lessonVideo[0]?.path;
+
+     if(!courseId||!lessonName||!videoPath){
+        throw new ApiError(400,'bad request');
+     }
+
+     const cloudinaryRes=await uploadOnCloudinary(videoPath);
+     if(!cloudinaryRes){
+        throw new ApiError(500,'error while uploading the video')
+     }
+
+     const videoUrl=cloudinaryRes.url;
+
+     const course=await Course.findById(courseId);
+     if(!course){
+        throw new ApiError(404,'Course not found');
+     }
+
+     course.lessons.push({lessonName,videoUrl});
+     await course.save();
+
+     return res.status(202).json(
+        new ApiResponse(202,{videoUrl},'lesson uploaded successfully')
+     )
 })
 

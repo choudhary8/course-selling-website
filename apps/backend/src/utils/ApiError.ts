@@ -1,8 +1,8 @@
 export interface IApiError{
     statusCode:number;
     success:boolean;
-    data:any;
-    errors:Array<Error>;
+    data?:any;
+    errors?:Array<Error>;
 }
 export class ApiError extends Error implements IApiError{
     statusCode:number;
@@ -11,7 +11,7 @@ export class ApiError extends Error implements IApiError{
     errors:Array<Error>;
 
     constructor(
-        statusCode:number,
+        statusCode:number=500,
         message:string="Something went wrong",
         errors:Array<Error>=[],
         stack=""

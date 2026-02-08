@@ -3,6 +3,8 @@ import { useCallback} from "react"
 import { BASE_URL } from "../utils/constants";
 import { FaGraduationCap } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { errorHandler } from "../utils/errorHandler";
+import toast from "react-hot-toast";
 
 
 interface Iuser{
@@ -31,10 +33,14 @@ export const Login=()=>{
             
             localStorage.setItem('authToken',res.data.data.token)
             navigate('/home',{replace:true});
-            
         } catch (error) {
-            console.log(error);
-            
+           const message= errorHandler(error,'Api failed');
+           if(message.includes('Password incorrect')||message.includes('User not found')){
+           toast.error('Incorrect credentials');
+        }
+        else {
+            toast.error(message);
+        }
         }
     },[])
     return (

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/constants"
+import { errorHandler } from "../utils/errorHandler";
 
 export const createCourse=async(reqData:FormData)=>{
     try { 
@@ -12,6 +13,6 @@ export const createCourse=async(reqData:FormData)=>{
         })
         return res.data;
     } catch (error) {
-        console.log(error);
+        errorHandler(error,'Api failed');
     }
 }

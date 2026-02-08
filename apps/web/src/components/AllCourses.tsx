@@ -1,8 +1,11 @@
-import { useCoursesList, type Icourse } from "../hooks/useAllCourses";
+// import { useCoursesList} from "../hooks/useAllCourses";
+import { useApi } from "../hooks/useGetApi";
+import type { Icourse } from "../utils/interfaces";
 import { Course } from "./Course";
 
 export const CoursesList = () => {
-  const courses: Icourse[] = useCoursesList();
+  const courses: Icourse[] = useApi("/users/courses");
+  
   return (
     <div className="md:mx-30 mx-2 sm:mx-8">
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 items-start">
@@ -21,7 +24,8 @@ export const CoursesList = () => {
                 ? course.creator.lastName
                 : "")
             }
-            price={course.price}
+            price={course.price} 
+            buy={true}
           />
         ))}
       </div>

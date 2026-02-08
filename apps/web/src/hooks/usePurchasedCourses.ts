@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { getPurchasedCourses } from "../services/getPurchasedCourses";
-import type { Icourse } from "./useAllCourses";
+import type { Icourse } from "../utils/interfaces";
 
 export const usePurchasedCourses=()=>{
     const [courses,setCourses]=useState<Icourse[]>([]);

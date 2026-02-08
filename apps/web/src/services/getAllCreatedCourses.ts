@@ -1,6 +1,7 @@
 import axios from "axios"
 import { BASE_URL } from "../utils/constants"
-import type { Icourse } from "../hooks/useAllCourses";
+import type { Icourse } from "../utils/interfaces";
+import { errorHandler } from "../utils/errorHandler";
 
 export const getAllCreatedCourses=async()=>{
     try {
@@ -10,9 +11,9 @@ export const getAllCreatedCourses=async()=>{
                 Authorization:`Bearer ${token}`
             }
         })
-        return res.data.data;
+        return res.data.data.courses;
     } catch (error) {
-        console.log(error);
-        return [];
+        errorHandler(error,'Api failed');
+    return [];
     }
 }

@@ -1,5 +1,6 @@
 import axios from "axios"
 import {  BASE_URL } from "../utils/constants"
+import { errorHandler } from "../utils/errorHandler";
 
 export const purchaseCourse=async(course:string)=>{
     try{
@@ -12,8 +13,12 @@ export const purchaseCourse=async(course:string)=>{
             }
         })
         return res.data;
-    }catch(error){
-        alert(error.response.data.message);
-        throw error;
+    }catch(error:any){
+        const message=errorHandler(error,'Api failed');
+        console.log(message);
+        if(message.includes('Already purchased'))
+        throw new Error('Already Purchased');
+        else
+        throw new Error(message);
     }
 }

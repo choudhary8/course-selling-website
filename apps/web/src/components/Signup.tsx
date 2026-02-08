@@ -2,6 +2,9 @@ import { useCallback} from "react"
 import { BASE_URL } from "../utils/constants";
 import { FaGraduationCap } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { errorHandler } from "../utils/errorHandler";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 export const Signup=()=>{
 
@@ -17,25 +20,25 @@ export const Signup=()=>{
         try {
             const formData=new FormData(event.currentTarget);
             event.preventDefault();
-            const res=await fetch(`${BASE_URL}/users/signup`,
+            const res=await axios.post(`${BASE_URL}/users/signup`,
                 {
-                    method:"POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                      },
-                    body:JSON.stringify({
-                    firstName:`${formData.get('firstName')}`,
-                    lastName:`${formData.get('lastName')}`,
-                    email:`${formData.get('email')}`,
-                    password:`${formData.get('password')}`,
-            }),}
+                    firstName:formData.get('firstName'),
+                    lastName:formData.get('lastName'),
+                    email:formData.get('email'),
+                    password:formData.get('password'),
+            }
             )
-            const data=await res.json();
+            const data=res.data;
             navigate('/');
             console.log(data);
         } catch (error) {
-            console.log(error);
-            
+            const message=errorHandler(error,'Api failed');
+            if(message.includes('User already exist')){
+                toast.error('User already exist');
+             }
+             else {
+                 toast.error(message);
+             }
         }
     },[])
     return (

@@ -5,8 +5,9 @@
 
 import mongoose from "mongoose";
 import bcrypt from "bcrypt"
+import { IUser, IUserMethods, UserDocument } from "../utils/interfaces";
 
-const userSchema=new mongoose.Schema({
+const userSchema=new mongoose.Schema<IUser,any,IUserMethods>({
     firstName:String,
     lastName:String,
     email:{
@@ -28,14 +29,15 @@ const userSchema=new mongoose.Schema({
     }]
 })
 
-userSchema.pre("save",async function (next){
-    if(!this.isModified("password"))return next();
+userSchema.pre("save",async function (){
+    if(!this.isModified("password"))return;
     this.password=await bcrypt.hash(this.password,10);
-    next();
 })
 
 userSchema.methods.isPasswordCorrect=function (password:string):Promise<boolean>{
+    console.log(this.password);
+    
     return bcrypt.compare(password,this.password);
 }
 
-export const User=mongoose.model("User",userSchema);
+export const User=mongoose.model<IUser,mongoose.Model<IUser,{},IUserMethods>>("User",userSchema);

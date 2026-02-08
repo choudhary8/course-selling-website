@@ -5,8 +5,20 @@
 //imageurl - string
 
 import mongoose, { Mongoose, Schema } from "mongoose";
+import { ICourse, CourseDocument, Ilesson } from "../utils/interfaces";
 
-const courseSchema=new Schema({
+const lessonSchema=new Schema<Ilesson>({
+    lessonName:{
+        type:String,
+        required:true
+    },
+    videoUrl:{
+        type:String,
+        required:true
+    }
+})
+
+const courseSchema=new Schema<ICourse>({
     title:{
         type:String,
         required:true
@@ -28,7 +40,8 @@ const courseSchema=new Schema({
         ref:"User",
         required:true
     },
-    imageUrl: { type: String,required:true }
+    imageUrl: { type: String,required:true },
+    lessons:[lessonSchema]
 })
 
-export const Course=mongoose.model("Course",courseSchema);
+export const Course=mongoose.model<ICourse,mongoose.Model<ICourse>>("Course",courseSchema);

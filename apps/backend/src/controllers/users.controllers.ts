@@ -69,9 +69,16 @@ export const userLogin=asyncHandler(async (req:Request,res:Response)=>{
         throw new ApiError(400,"parameters required")
     }
 
-    const user=await User.findOne({email:email}).select("-password");
+    const user=await User.findOne({email:email});
     if(!user){
         throw new ApiError(404,"User not found")
+    }
+
+    const isCorrect=await user.isPasswordCorrect(password);
+    // console.log(isCorrect);
+    
+    if(!isCorrect){
+        throw new ApiError(400,"Password incorrect")
     }
 
     const token=jwt.sign({
@@ -95,7 +102,7 @@ export const userLogin=asyncHandler(async (req:Request,res:Response)=>{
 
 export const getAllCourses=asyncHandler(async(req:Request,res:Response)=>{
     //get all courses from db
-    const courses=await Course.find().populate('creator','firstName lastName');
+    const courses=await Course.find().populate('creator','firstName lastName').select('-lessons');
     
     if(!courses){
         throw new ApiError(404,"No courses available")
@@ -133,7 +140,7 @@ export const purchaseCourse=asyncHandler(async(req:Request,res:Response)=>{
         throw new ApiError(404,"User not found");
     }
 
-    if(user.purchasedCourses.some(id=>id.equals(new mongoose.Types.ObjectId(courseId)))){
+    if(user.purchasedCourses.some(id=>id.equals(courseId))){
         throw new ApiError(400,"Already purchased");
     }
 
@@ -186,3 +193,26 @@ export const getPurchasedCourses=asyncHandler(async (req:Request, res:Response)=
     )
 
 });
+
+
+export const getLessonsList=asyncHandler(async(req:Request, res:Response)=>{
+    //get courseID
+    //verify courseId
+    //get the lessons with course
+    const courseId=req.params.courseId;
+    console.log(courseId);
+    
+    if(!courseId){
+        throw new ApiError(400,'course id misssing');
+    }
+
+    const lessonsList=await Course.findById(courseId).select('lessons');
+    if(!lessonsList){
+        throw new ApiError(500,'Error while fetching the lessons');
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200,lessonsList,'lessons fetched successfully')
+    );
+
+})
