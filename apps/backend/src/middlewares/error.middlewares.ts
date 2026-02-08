@@ -4,7 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse";
 
 
 export const errorHandler=(error:ApiError, req:Request, res:Response,next:NextFunction)=>{
-    console.log(error.statusCode);
+    console.log(error);
     
     return res.status(error.statusCode||500).json(
         new ApiResponse(error.statusCode,{
