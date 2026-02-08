@@ -21,7 +21,7 @@ const connectDb=async ()=>{
     }
 }
 
-export default asyncHandler (async (req:any, res:any)=>{
+export default async function handler(req:any, res:any){
     await connectDb();
     return app(req,res);
-})
+}
