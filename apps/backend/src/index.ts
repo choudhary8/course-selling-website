@@ -9,6 +9,7 @@ const server=http.createServer(app);
 
 try{
     const db=mongoose.connect(process.env.DB_URI||'');
+    console.log(db);
     
     server.listen(process.env.PORT,()=>{
         console.log(`server listening at port ${process.env.PORT}`);
