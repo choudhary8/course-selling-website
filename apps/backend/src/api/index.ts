@@ -27,7 +27,7 @@
 // }
 
 
-import app from "../src/app";
+import app from "../app";
 import { connectDB } from "../lib/db";
 
 export default async function handler(req: any, res: any) {
