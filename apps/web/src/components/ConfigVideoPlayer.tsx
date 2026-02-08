@@ -1,5 +1,5 @@
-const ConfigVideoPlayer=()=>{
-    return (<div>
+// const ConfigVideoPlayer=()=>{
+//     return (<div>
         
-    </div>)
-}
+//     </div>)
+// }

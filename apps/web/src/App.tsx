@@ -9,7 +9,7 @@ import { CreatedCourses } from './components/CreatedCourses'
 import { Layout } from './components/Layout'
 import { Toaster } from 'react-hot-toast'
 import { LessonList } from './components/LessonList'
-import { LessonUpload } from './components/LessonUpload'
+// import { LessonUpload } from './components/LessonUpload'
 
 function App() {
   

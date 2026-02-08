@@ -8,7 +8,7 @@ import { useSearchParams } from "react-router-dom";
 
 export const LessonList = () => {
 
-    const [searchParams,setSearchParams]=useSearchParams();
+    const [searchParams]=useSearchParams();
     const course=searchParams.get('course');
     const [list,setList]=useState<Ilesson[]>([])
     const [uploadVideo,setUploadVideo]=useState<boolean>(false);
