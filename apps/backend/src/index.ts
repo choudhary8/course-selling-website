@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config();
 import app from './app';
 import mongoose from 'mongoose';
+import { errorHandler } from './middlewares/error.middlewares';
 
 const server=http.createServer(app);
 
@@ -17,3 +18,4 @@ try{
     
 }
 
+app.use(errorHandler as any)
