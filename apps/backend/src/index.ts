@@ -5,12 +5,12 @@ import app from './app';
 import mongoose from 'mongoose';
 import { errorHandler } from './middlewares/error.middlewares';
 
-const server=http.createServer(app);
+
 
 try{
     const db=mongoose.connect(process.env.DB_URI||'');
     console.log(db);
-    
+    const server=http.createServer(app);
     server.listen(process.env.PORT,()=>{
         console.log(`server listening at port ${process.env.PORT}`);
     })
