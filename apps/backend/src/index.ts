@@ -1,9 +1,8 @@
 import http from 'http';
 import dotenv from 'dotenv'
 dotenv.config();
-import app from '../src/app';
 import mongoose from 'mongoose';
-import { asyncHandler } from '../src/utils/asyncHandler';
+import app from './app';
 
 const connectDb=async ()=>{
     try{
@@ -21,8 +20,5 @@ const connectDb=async ()=>{
     }
 }
 
-export default async function handler(req:any, res:any){
-    await connectDb();
-    return app(req,res);
-}
+connectDb();
 
