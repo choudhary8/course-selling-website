@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { LessonUpload } from "./LessonUpload";
 import type { Ilesson } from "../utils/interfaces";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
