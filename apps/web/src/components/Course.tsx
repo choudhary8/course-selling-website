@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { LuUser } from "react-icons/lu";
 import { purchaseCourse } from "../services/purchaseCourse";
 import toast from "react-hot-toast";
@@ -28,8 +28,11 @@ export const Course = ({
 }: Iparams) => {
   const navigate=useNavigate();
   const location=useLocation();
+  const [loading,setLoading]=useState(false);
+
   const buyCourse = useCallback(async () => {
     try {
+      setLoading(true);
       const res = await purchaseCourse(courseId);
       console.log(res);
 
@@ -39,8 +42,14 @@ export const Course = ({
     } catch (error: any) {
       const message = errorHandler(error, "Course puchase failed");
       toast.error(message);
+    }finally{
+      setLoading(false);
     }
   }, []);
+
+  if(loading){
+    return <div className="flex items-center justify-center h-full"><div className="loader"></div></div>
+  }
   return (
     <div className="rounded-2xl shadow-xl bg-gray-800 overflow-hidden">
       <div>

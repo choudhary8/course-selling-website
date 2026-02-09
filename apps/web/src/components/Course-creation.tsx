@@ -1,11 +1,14 @@
-import React, { useCallback } from "react"
+import React, { useCallback, useState } from "react"
 import { FaGraduationCap } from "react-icons/fa"
 import { createCourse} from "../services/create-course";
 import { errorHandler } from "../utils/errorHandler";
 import toast from "react-hot-toast";
 
 export const CourseCreation=()=>{
+    const [loading,setLoading]=useState(false);
+
     const handleSubmit:React.FormEventHandler<HTMLFormElement>=useCallback(async(event)=>{
+        setLoading(true);
         event.preventDefault();
         try {
             const formData=new FormData(event.currentTarget);
@@ -16,8 +19,15 @@ export const CourseCreation=()=>{
             const message=errorHandler(error,'Course creation failed')
             
                  toast.error(message);
+        }finally{
+            setLoading(false);
         }
     },[])
+
+    if(loading){
+        return <div className="flex items-center justify-center h-[80dvh]"><div className="loader"></div></div>
+      }
+
     return (
         <div className="flex justify-center items-center h-screen">
             <form onSubmit={handleSubmit} action="" className="flex flex-col sm:w-1/3 p-10 rounded-2xl shadow-xl bg-gray-800">

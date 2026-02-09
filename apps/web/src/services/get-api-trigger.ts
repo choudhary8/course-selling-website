@@ -17,7 +17,6 @@ export const getApiTrigger = async (route: string) => {
 
     const courses = res.data.data.courses;
     console.log(res);
-    
     return courses;
   } catch (error) {
     errorHandler(error,'Api failed');

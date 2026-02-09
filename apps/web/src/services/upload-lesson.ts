@@ -1,6 +1,8 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import type { IlessonDetails } from "../utils/interfaces";
+import toast from "react-hot-toast";
+import { errorHandler } from "../utils/errorHandler";
 
 export const uploadLesson=async (lessonDetails:IlessonDetails)=>{
     try {
@@ -11,10 +13,8 @@ export const uploadLesson=async (lessonDetails:IlessonDetails)=>{
                 "Content-Type": "multipart/form-data"
             }
         })
-        console.log(res);
-        
     } catch (error) {
         console.log(error);
-        
+        errorHandler(error,"upload failed");
     }
 }

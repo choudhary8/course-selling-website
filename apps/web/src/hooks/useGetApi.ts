@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 
 export const useGetApi=(route:string)=>{
     const [courses,setCourses]=useState<Icourse[]>([]);
+
+  const [loading,setLoading]=useState<boolean>(true);
     const getCourses=useCallback(async(route:string)=>{
         try {
             const courses=await getApiTrigger(route);
@@ -18,11 +20,14 @@ export const useGetApi=(route:string)=>{
             const message=errorHandler(error,'Data fetching failed');
             toast.error(message);
         }
+        finally{
+            setLoading(false);
+        }
     },[])
 
     useEffect(()=>{
         getCourses(route);
     },[route]);
 
-    return courses;
+    return {loading,courses};
 }

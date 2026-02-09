@@ -12,12 +12,14 @@ export const LessonList = () => {
     const course=searchParams.get('course');
     const location=useLocation();
     const navigate=useNavigate();
-    console.log(location.state.from);
+    // console.log(location.state.from);
     
     const [list,setList]=useState<Ilesson[]>([])
+    const [loading,setLoading]=useState(false);
 
     const getList=useCallback(async(courseId:string)=>{
       try {
+        setLoading(true);
         const authToken=localStorage.getItem('authToken');
         const res=await axios.get<{data:{lessons:Ilesson[]}}>(`${BASE_URL}/users/course/${courseId}/lessons-list`,{
           headers:{
@@ -33,6 +35,8 @@ export const LessonList = () => {
         setList(lessons);
       } catch (error) {
         toast.error('Error while fetching the lessons')
+      }finally{
+        setLoading(false);
       }
     },[])
 
@@ -46,7 +50,11 @@ export const LessonList = () => {
         navigate('/lesson-upload',{state:{courseId:course}});
       }
     },[])
-    
+  
+    if(loading){
+      return <div className="flex items-center justify-center h-[80dvh]"><div className="loader"></div></div>
+    }
+
   return <div className="md:mx-30 mx-2 sm:mx-8">
     <div className="flex flex-row-reverse">
       {(location.state.from==='/created-courses')&&<button onClick={handleUpload} className="mt-3 mr-5 bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 rounded-lg cursor-pointer">Upload Lesson</button>}

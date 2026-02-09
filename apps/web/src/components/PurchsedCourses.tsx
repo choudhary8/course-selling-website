@@ -1,11 +1,16 @@
 // import { usePurchasedCourses } from "../hooks/usePurchasedCourses";
 import { useGetApi } from "../hooks/useGetApi";
+import type { Icourse } from "../utils/interfaces";
 import { Course } from "./Course";
 
 export const PurchasedCourses = () => {
-  const courses = useGetApi("/users/courses/purchasedCourses");
-  return (
-    <div className="md:mx-30 mx-2 sm:mx-8">
+  const {loading,courses}:{loading:boolean,courses:Icourse[]}=useGetApi("/users/courses");
+
+  if(loading){
+    return <div className="flex items-center justify-center h-[80dvh]"><div className="loader"></div></div>
+  }
+
+  return (<><div className="md:mx-30 mx-2 sm:mx-8  my-8">
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 items-start">
         {courses.map((course) => (
           <Course
@@ -27,6 +32,6 @@ export const PurchasedCourses = () => {
           />
         ))}
       </div>
-    </div>
+    </div></>
   );
 };

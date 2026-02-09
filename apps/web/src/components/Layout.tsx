@@ -3,9 +3,9 @@ import { Navbar } from "./Navbar"
 
 export const Layout=()=>{
     return (
-        <>
+        <div className="flex flex-col min-h-screen">
             <Navbar/>
             <Outlet/>
-        </>
+        </div>
     )
 }
