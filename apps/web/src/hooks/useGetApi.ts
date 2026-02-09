@@ -4,7 +4,7 @@ import { getApiTrigger } from "../services/get-api-trigger";
 import { errorHandler } from "../utils/errorHandler";
 import toast from "react-hot-toast";
 
-export const useApi=(route:string)=>{
+export const useGetApi=(route:string)=>{
     const [courses,setCourses]=useState<Icourse[]>([]);
     const getCourses=useCallback(async(route:string)=>{
         try {

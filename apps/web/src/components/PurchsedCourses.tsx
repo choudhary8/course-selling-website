@@ -1,9 +1,9 @@
 // import { usePurchasedCourses } from "../hooks/usePurchasedCourses";
-import { useApi } from "../hooks/useGetApi";
+import { useGetApi } from "../hooks/useGetApi";
 import { Course } from "./Course";
 
 export const PurchasedCourses = () => {
-  const courses = useApi("/users/courses/purchasedCourses");
+  const courses = useGetApi("/users/courses/purchasedCourses");
   return (
     <div className="md:mx-30 mx-2 sm:mx-8">
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 items-start">

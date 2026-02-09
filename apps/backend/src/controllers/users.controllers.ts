@@ -206,7 +206,7 @@ export const getLessonsList=asyncHandler(async(req:Request, res:Response)=>{
         throw new ApiError(400,'course id misssing');
     }
 
-    const lessonsList=await Course.findById(courseId).select('lessons');
+    const lessonsList=await Course.findById(courseId).select('lessons ');
     if(!lessonsList){
         throw new ApiError(500,'Error while fetching the lessons');
     }

@@ -1,10 +1,10 @@
 // import { useCoursesList} from "../hooks/useAllCourses";
-import { useApi } from "../hooks/useGetApi";
+import { useGetApi } from "../hooks/useGetApi";
 import type { Icourse } from "../utils/interfaces";
 import { Course } from "./Course";
 
 export const CoursesList = () => {
-  const courses: Icourse[] = useApi("/users/courses");
+  const courses: Icourse[] = useGetApi("/users/courses");
   
   return (
     <div className="md:mx-30 mx-2 sm:mx-8">

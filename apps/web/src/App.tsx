@@ -9,7 +9,7 @@ import { CreatedCourses } from './components/CreatedCourses'
 import { Layout } from './components/Layout'
 import { Toaster } from 'react-hot-toast'
 import { LessonList } from './components/LessonList'
-// import { LessonUpload } from './components/LessonUpload'
+import { LessonUpload } from './components/LessonUpload'
 
 function App() {
   
@@ -19,13 +19,14 @@ function App() {
     <Routes>
       <Route path='/signup' element={<Signup/>}/>
       <Route path='/' element={<Login/>}/>
+      <Route path='/login' element={<Login/>}/>
       <Route element={<Layout/>}>
         <Route path='home' element={<CoursesList/>}/>
         <Route path='create-course' element={<CourseCreation/>}/>
         <Route path='purchased-course' element={<PurchasedCourses/>} />
         <Route path='created-courses' element={<CreatedCourses/>} />
         <Route path='lessons-list' element={<LessonList/>} />
-        {/* <Route path='lesson-upload' element={<LessonUpload/>}></Route> */}
+        <Route path='lesson-upload' element={<LessonUpload/>}></Route>
       </Route>
     </Routes>
     </BrowserRouter>

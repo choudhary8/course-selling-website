@@ -3,7 +3,7 @@ import { LuUser } from "react-icons/lu";
 import { purchaseCourse } from "../services/purchaseCourse";
 import toast from "react-hot-toast";
 import { errorHandler } from "../utils/errorHandler";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export interface Iparams {
   courseId: string;
@@ -27,6 +27,7 @@ export const Course = ({
   buy,
 }: Iparams) => {
   const navigate=useNavigate();
+  const location=useLocation();
   const buyCourse = useCallback(async () => {
     try {
       const res = await purchaseCourse(courseId);
@@ -68,7 +69,7 @@ export const Course = ({
             Buy
           </button>
         ) : (
-          <button onClick={()=>{navigate(`../lessons-list?course=${courseId}`)}} className="hover:bg-blue-800 text-blue-600 hover:text-white border-black p-3 mt-2 rounded-lg cursor-pointer w-full">
+          <button onClick={()=>{navigate(`../lessons-list?course=${courseId}`,{state:{from:location.pathname}})}} className="hover:bg-blue-800 text-blue-600 hover:text-white border-black p-3 mt-2 rounded-lg cursor-pointer w-full">
               View Course
           </button>
         )}

@@ -2,8 +2,12 @@ import { useCallback } from "react"
 import { FaGraduationCap } from "react-icons/fa"
 import type { IlessonDetails } from "../utils/interfaces";
 import { uploadLesson } from "../services/upload-lesson";
+import { useLocation, useNavigate } from "react-router-dom";
 
-export const LessonUpload=({courseId}:{courseId:string})=>{
+export const LessonUpload=()=>{
+    const navigate=useNavigate();
+    const location=useLocation();
+    const courseId=location.state?.courseId;
     const handleSubmit:React.FormEventHandler<HTMLFormElement>=useCallback((event)=>{
         event.preventDefault();
         const formData=new FormData(event.currentTarget);
@@ -26,6 +30,7 @@ export const LessonUpload=({courseId}:{courseId:string})=>{
         <label htmlFor="lessonVideo">Lesson video</label>
         <input type="file" name="lessonVideo" id="lessonVideo" required/>
 
+        <button onClick={()=>{navigate(-1)}} className="bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 mt-5 rounded-lg cursor-pointer">Back</button>
         <button type="submit" className="bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 mt-5 rounded-lg cursor-pointer">Upload</button>
     </form>
 </div>
