@@ -1,4 +1,4 @@
-import React, { useCallback, useState, type InputEventHandler } from "react"
+import React, { useCallback, useState} from "react"
 import { FaGraduationCap } from "react-icons/fa"
 import type { IlessonDetails } from "../utils/interfaces";
 import { uploadLesson } from "../services/upload-lesson";
