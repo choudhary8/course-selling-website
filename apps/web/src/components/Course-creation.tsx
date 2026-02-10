@@ -24,8 +24,19 @@ export const CourseCreation=()=>{
         }
     },[])
 
+    const handleFileSize=(event:React.ChangeEvent<HTMLInputElement>)=>{
+        const file=event.target.files?.[0];
+        if(!file)return;
+        const fileSize=file?.size/(1024*1024);
+        if(fileSize>5){
+            toast.error(`file size must be less than 5MB.`)
+            event.target.value='';
+            return;
+        }
+    }
+
     if(loading){
-        return <div className="flex items-center justify-center h-[80dvh]"><div className="loader"></div></div>
+        return <div className="flex items-center justify-center flex-1"><div className="loader"></div></div>
       }
 
     return (
@@ -47,8 +58,8 @@ export const CourseCreation=()=>{
                 <label htmlFor="price">Price</label>
                 <input type="number" name="price" id="price" placeholder="Enter course price" required/>
 
-                <label htmlFor="imge">Course thumbnil</label>
-                <input type="file" name="imge" id="imge" required/>
+                <label htmlFor="imge">Course thumbnil <span className="text-[0.71rem]">(*limit-5MB)</span></label>
+                <input onChange={handleFileSize} type="file" accept="image/*" name="imge" id="imge" required/>
 
                 <button type="submit" className="bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 mt-5 rounded-lg cursor-pointer">Create</button>
             </form>

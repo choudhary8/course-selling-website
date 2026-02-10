@@ -4,10 +4,14 @@ import { ApiError } from "../utils/ApiError";
 import { User } from "../models/user.models";
 import { Course } from "../models/course.models";
 import { ApiResponse } from "../utils/ApiResponse";
-import { uploadOnCloudinary } from "../utils/cloudinary";
 import { Multer } from "multer";
 import { Admin } from "../models/admin.models";
-
+import ffmpeg from "../utils/ffmpeg";
+import {v4 as uuidv4}  from 'uuid';
+import fs from 'fs'
+import path from 'path'
+import { uploadOnCloudinary } from "../utils/cloudinary";
+import { genrateHls } from "../utils/generateHls";
 
 
 export const adminSignup=1;
@@ -25,7 +29,7 @@ export const editCourse=asyncHandler(async(req:Request, res:Response)=>{
         throw new ApiError(404,"Course not found")
     }
 
-    const response=await uploadOnCloudinary(localFilePath||'');
+    const response=await uploadOnCloudinary(localFilePath||'','courses');
     if(!response){
         throw new ApiError(500,"Error while uploading file")
     }
@@ -55,7 +59,7 @@ export const createCourse=asyncHandler(async (req:Request, res:Response)=>{
     const courseDetails=req.body as course;
     const files=req.files as {imge:Express.Multer.File[]}
     const localFilePath=files?.imge?.[0]?.path;
-    const response=await uploadOnCloudinary(localFilePath||'');
+    const response=await uploadOnCloudinary(localFilePath||'','courses');
     const imageUrl=response?.url;
     
     Object.values(courseDetails).forEach(ele=>{
@@ -114,23 +118,42 @@ export const uploadLesson=asyncHandler(async(req,res,next)=>{
      const {courseId,lessonName}=req.body;
      const files=req.files as {lessonVideo:Express.Multer.File[]}
      const videoPath=files?.lessonVideo[0]?.path;
+     const id=uuidv4();
 
      if(!courseId||!lessonName||!videoPath){
         throw new ApiError(400,'bad request');
      }
-
-     const cloudinaryRes=await uploadOnCloudinary(videoPath);
-     if(!cloudinaryRes){
-        throw new ApiError(500,'error while uploading the video')
-     }
-
-     const videoUrl=cloudinaryRes.url;
 
      const course=await Course.findById(courseId);
      if(!course){
         throw new ApiError(404,'Course not found');
      }
 
+
+
+    //  const outputPath=path.join(
+    //     process.cwd(),
+    //     "public",
+    //     "courses",
+    //     courseId,
+    //     id
+    //   );;
+    //  if(!fs.existsSync(outputPath)){
+    //     fs.mkdirSync(outputPath, {recursive: true});
+    //  }
+
+
+    //  const videoUrl=cloudinaryRes.url;
+    //  const hlsPath=`${outputPath}/index.m3u8`;
+
+    // const hls =await genrateHls(videoPath,outputPath,hlsPath);
+    //  console.log(hls);
+     
+     const response=await uploadOnCloudinary(videoPath,`courses/${courseId}/${id}`);
+
+     const videoUrl=await response?.secure_url.replace(".mp4", ".m3u8");
+    //  console.log(response);
+     
      course.lessons.push({lessonName,videoUrl});
      await course.save();
 

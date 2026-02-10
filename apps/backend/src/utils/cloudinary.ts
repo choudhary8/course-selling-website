@@ -7,16 +7,29 @@ cloudinary.config({
     api_secret:process.env.CLOUDINARY_API_SECRET
 })
 
-export const uploadOnCloudinary=async (filePath:string)=>{
+export const uploadOnCloudinary=async (filePath:string,folder:string)=>{
     try{
         if(!filePath) return null
+        // console.log('filePath:',filePath);
+        
         const response=await cloudinary.uploader.upload(filePath,{
-            resource_type:'auto'
+            folder:folder,
+            resource_type:'video',
+            eager_async: false,
+            eager: [
+                {
+                  streaming_profile: "hd",
+                  format: "m3u8",
+                },
+              ]
         })
         fs.unlinkSync(filePath)
+        // console.log('response:',response);
         return response;
     }catch(err){
         fs.unlinkSync(filePath)
+        console.log('err :',err);
+        
         return null;
     }
 }

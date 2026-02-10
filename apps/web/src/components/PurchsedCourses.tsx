@@ -4,10 +4,10 @@ import type { Icourse } from "../utils/interfaces";
 import { Course } from "./Course";
 
 export const PurchasedCourses = () => {
-  const {loading,courses}:{loading:boolean,courses:Icourse[]}=useGetApi("/users/courses");
+  const {loading,courses}:{loading:boolean,courses:Icourse[]}=useGetApi("/users/courses/purchasedCourses");
 
   if(loading){
-    return <div className="flex items-center justify-center h-[80dvh]"><div className="loader"></div></div>
+    return <div className="flex items-center justify-center flex-1"><div className="loader"></div></div>
   }
 
   return (<><div className="md:mx-30 mx-2 sm:mx-8  my-8">

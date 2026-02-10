@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import React, { useCallback, useState, type InputEventHandler } from "react"
 import { FaGraduationCap } from "react-icons/fa"
 import type { IlessonDetails } from "../utils/interfaces";
 import { uploadLesson } from "../services/upload-lesson";
@@ -32,8 +32,19 @@ export const LessonUpload=()=>{
         }
     },[])
 
+    const handleFileSize=(event:React.ChangeEvent<HTMLInputElement>)=>{
+        const file=event.target.files?.[0];
+        if(!file)return;
+        const fileSize=file?.size/(1024*1024);
+        if(fileSize>20){
+            toast.error(`file size must be less than 20MB.`)
+            event.target.value='';
+            return;
+        }
+    }
+
     if(loading){
-        return <div className="flex items-center justify-center h-[80dvh]"><div className="loader"></div></div>
+        return <div className="flex flex-col items-center justify-center flex-1"><div className="text-blue-800">Please wait... This may take a while if video is long.</div><div className="loader"></div></div>
       }
 
     return <div className="flex flex-1 justify-center items-center">
@@ -44,11 +55,11 @@ export const LessonUpload=()=>{
         <label htmlFor="lessonName">Lesson name</label>
         <input  name="lessonName" id="lessonName" placeholder="Enter your lesson name" required/>
 
-        <label htmlFor="lessonVideo">Lesson video</label>
-        <input type="file" name="lessonVideo" id="lessonVideo" required/>
+        <label htmlFor="lessonVideo">Lesson video <span className="text-[0.71rem]">(*limit-20MB and .mp4 & .webm)</span></label>
+        <input onChange={handleFileSize} type="file" accept="video/mp4,video/webm" name="lessonVideo" id="lessonVideo" required/>
 
         <button type="submit" className="bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 mt-5 rounded-lg cursor-pointer">Upload</button>
-        <button onClick={()=>{navigate(-1)}} className="bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 mt-5 rounded-lg cursor-pointer">Back</button>
+        <div onClick={()=>{navigate(-1)}} className="flex justify-center bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 mt-5 rounded-lg cursor-pointer">Back</div>
         </form>
 </div>
 }

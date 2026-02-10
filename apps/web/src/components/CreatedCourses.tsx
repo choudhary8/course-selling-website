@@ -7,7 +7,7 @@ export const CreatedCourses = () => {
   const {loading,courses}:{loading:boolean,courses:Icourse[]} = useGetApi("/admin/created-courses");
 
   if(loading){
-    return <div className="flex items-center justify-center h-[80dvh]"><div className="loader"></div></div>
+    return <div className="flex items-center justify-center flex-1"><div className="loader"></div></div>
   }
 
   return (<>
