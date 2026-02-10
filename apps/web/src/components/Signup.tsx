@@ -67,9 +67,9 @@ export const Signup=()=>{
                 <input type="password" name="password" id="password" placeholder="Enter Your Password" required/>
 
                 <button type="submit" className="bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 mt-3 rounded-lg cursor-pointer">Sign up</button>
-                <div className="mt-2">
+                <div className="flex mt-2">
                     <span>Already have account? </span>
-                    <a href="./" className="text-blue-500 hover:text-blue-600">Login</a>
+                    <div onClick={()=>{navigate('/login')}} className="text-blue-500 hover:text-blue-600 pl-1">Login</div>
                 </div>
             </form>
         </div>

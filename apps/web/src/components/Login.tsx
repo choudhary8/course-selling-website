@@ -69,7 +69,7 @@ export const Login=()=>{
                 <div className="flex mt-2">
                     {/* <a href="" className="text-blue-500 hover:text-blue-600">Forget password? </a>  */}
                     Not having an account? 
-                    <a href="./Signup" className="text-blue-500 hover:text-blue-600 pl-1"> Sign up</a>
+                    <div onClick={()=>{navigate('/signup')}} className="text-blue-500 hover:text-blue-600 pl-1"> Sign up</div>
                 </div>
             </form>
         </div>
