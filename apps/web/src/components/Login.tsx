@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useCallback} from "react"
+import { useCallback, useState} from "react"
 import { BASE_URL } from "../utils/constants";
 import { FaGraduationCap } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -22,9 +22,11 @@ interface Ires{
 
 export const Login=()=>{
     const navigate=useNavigate();
+    const [loading,setLoading]=useState<boolean>(false);
     const handleSubmit:React.FormEventHandler<HTMLFormElement>=useCallback(async(event)=>{
         try {
             event.preventDefault();
+            setLoading(true);
             const formData=new FormData(event.currentTarget);
             const res=await axios.post<{data:Ires}>(`${BASE_URL}/users/login`,{
                 email:formData.get('email'),
@@ -41,8 +43,15 @@ export const Login=()=>{
         else {
             toast.error(message);
         }
+        }finally{
+            setLoading(false);
         }
     },[])
+
+    if(loading){
+        return <div className="flex flex-col items-center justify-center flex-1 h-dvh"><div className="text-blue-800">First request may take time as backend hosted on render</div><div className="loader"></div></div>
+      }
+
     return (
         <div className="flex justify-center items-center h-screen">
             <form onSubmit={handleSubmit} action="" className="flex flex-col w-[28%] p-10 rounded-2xl shadow-xl bg-gray-800">
@@ -55,12 +64,13 @@ export const Login=()=>{
                 <label htmlFor="password">Password</label>
                 <input type="password" name="password" id="password" placeholder="Enter your password" required/>
 
-                <div className="flex justify-between">
-                    <a href="" className="text-blue-500 hover:text-blue-600">Forget password? </a> 
-                    <a href="./Signup" className="text-blue-500 hover:text-blue-600">Sign up</a>
-                </div>
+                <button type="submit" className="bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 mt-3 rounded-lg cursor-pointer">Login</button>
 
-                <button type="submit" className="bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 mt-5 rounded-lg cursor-pointer">Login</button>
+                <div className="flex mt-2">
+                    {/* <a href="" className="text-blue-500 hover:text-blue-600">Forget password? </a>  */}
+                    Not having an account? 
+                    <a href="./Signup" className="text-blue-500 hover:text-blue-600 pl-1"> Sign up</a>
+                </div>
             </form>
         </div>
     )

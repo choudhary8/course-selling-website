@@ -1,4 +1,4 @@
-import { useCallback} from "react"
+import { useCallback, useState} from "react"
 import { BASE_URL } from "../utils/constants";
 import { FaGraduationCap } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -16,10 +16,12 @@ export const Signup=()=>{
     // }
 
     const navigate=useNavigate();
+    const [loading,setLoading]=useState<boolean>(false);
     const handleSubmit:React.FormEventHandler<HTMLFormElement>=useCallback(async(event)=>{
         try {
-            const formData=new FormData(event.currentTarget);
             event.preventDefault();
+            setLoading(true);
+            const formData=new FormData(event.currentTarget);
             const res=await axios.post(`${BASE_URL}/users/signup`,
                 {
                     firstName:formData.get('firstName'),
@@ -39,8 +41,13 @@ export const Signup=()=>{
              else {
                  toast.error(message);
              }
+        }finally{
+            setLoading(false);
         }
     },[])
+    if(loading){
+        return <div className="flex flex-col items-center justify-center flex-1 h-dvh"><div className="text-blue-800">First request may take time as backend hosted on render</div><div className="loader"></div></div>
+      }
     return (
         <div className="flex justify-center items-center h-screen">
             <form onSubmit={handleSubmit} action="" className="flex flex-col w-[29%] p-10 rounded-2xl shadow-xl bg-gray-800">
@@ -59,12 +66,11 @@ export const Signup=()=>{
                 <label htmlFor="password">Password</label>
                 <input type="password" name="password" id="password" placeholder="Enter Your Password" required/>
 
-                <div>
+                <button type="submit" className="bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 mt-3 rounded-lg cursor-pointer">Sign up</button>
+                <div className="mt-2">
                     <span>Already have account? </span>
                     <a href="./" className="text-blue-500 hover:text-blue-600">Login</a>
                 </div>
-
-                <button type="submit" className="bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 mt-5 rounded-lg cursor-pointer">Sign up</button>
             </form>
         </div>
     )

@@ -13,8 +13,8 @@ export const LessonUpload=()=>{
     const courseId=location.state?.courseId;
     const handleSubmit:React.FormEventHandler<HTMLFormElement>=useCallback(async (event)=>{
         try{
-            setLoading(true);
             event.preventDefault();
+            setLoading(true);
             const formData=new FormData(event.currentTarget);
             const lessonDetails:IlessonDetails={
                 courseId,

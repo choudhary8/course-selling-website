@@ -8,8 +8,8 @@ export const CourseCreation=()=>{
     const [loading,setLoading]=useState(false);
 
     const handleSubmit:React.FormEventHandler<HTMLFormElement>=useCallback(async(event)=>{
-        setLoading(true);
         event.preventDefault();
+        setLoading(true);
         try {
             const formData=new FormData(event.currentTarget);
             const res=await createCourse(formData);
