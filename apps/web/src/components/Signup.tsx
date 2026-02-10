@@ -46,7 +46,7 @@ export const Signup=()=>{
         }
     },[])
     if(loading){
-        return <div className="flex flex-col items-center justify-center flex-1 h-dvh"><div className="text-blue-800">First request may take time as backend hosted on render</div><div className="loader"></div></div>
+        return <div className="flex flex-col items-center justify-center flex-1 h-dvh"><div className="loader"></div></div>
       }
     return (
         <div className="flex justify-center items-center h-screen">

@@ -13,6 +13,7 @@ import { LessonUpload } from './components/LessonUpload'
 import { LessonVideo } from './components/LessonVideo'
 
 function App() {
+  alert('First request may take time as backend hosted on render.')
   return (
     <>
     <BrowserRouter>
