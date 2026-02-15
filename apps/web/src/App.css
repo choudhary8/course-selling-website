@@ -7,6 +7,15 @@ input,textarea{
   box-shadow: 0.5rem;
 }
 
+@media screen and (max-width:600px) {
+  input,textarea{
+    background-color: rgb(26, 25, 25);
+  }
+  [data-vjs-player] {
+  width: 100% !important;
+  margin: 0 auto;
+}
+}
 
 .loader {
   width: 52px;
@@ -35,4 +44,9 @@ input,textarea{
     50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
     75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
     100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+}
+
+[data-vjs-player] {
+  width: 83% !important;
+  margin: 0 auto;
 }

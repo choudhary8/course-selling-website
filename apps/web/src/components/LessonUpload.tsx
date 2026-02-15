@@ -48,7 +48,7 @@ export const LessonUpload=()=>{
       }
 
     return <div className="flex flex-1 justify-center items-center">
-    <form onSubmit={handleSubmit} action="" className="flex flex-col w-[28%] p-10 rounded-2xl shadow-xl bg-gray-800">
+    <form onSubmit={handleSubmit} action="" className="flex flex-col w-full sm:w-[28%] p-10 rounded-2xl sm:bg-gray-800">
         <div className="flex justify-center items-center font-bold text-xl"><FaGraduationCap className="text-4xl mx-2"/> CourseHub</div>
         <div className="text-center text-xl p-4">Upload your lesson</div>
 

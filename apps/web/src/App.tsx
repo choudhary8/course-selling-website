@@ -11,6 +11,7 @@ import { Toaster } from 'react-hot-toast'
 import { LessonList } from './components/LessonList'
 import { LessonUpload } from './components/LessonUpload'
 import { LessonVideo } from './components/LessonVideo'
+import { EditCourse } from './components/EditCourse'
 
 function App() {
   alert('First request may take time as backend hosted on render.')
@@ -29,6 +30,7 @@ function App() {
         <Route path='lessons-list' element={<LessonList/>} />
         <Route path='lesson-upload' element={<LessonUpload/>}></Route>
         <Route path='lesson-video' element={<LessonVideo/>}></Route>
+        <Route path='edit-course' element={<EditCourse/>}></Route>
       </Route>
     </Routes>
     </BrowserRouter>

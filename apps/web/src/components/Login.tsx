@@ -1,28 +1,28 @@
 import axios from "axios";
-import { useCallback, useState} from "react"
+import { useCallback, useContext, useState} from "react"
 import { BASE_URL } from "../utils/constants";
 import { FaGraduationCap } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { errorHandler } from "../utils/errorHandler";
 import toast from "react-hot-toast";
+import { UserContext } from "../utils/userContext";
 
 
-interface Iuser{
-    _id:string,
-    firstName:string,
-    lastName:string,
-    email:string,
-    purchasedCourses:string[]
-}
+// interface Iuser{
+//     _id:string,
+//     user:string
+// }
 
 interface Ires{
-    data:Iuser,
+    user:string,
     token:string
 }
 
 export const Login=()=>{
     const navigate=useNavigate();
     const [loading,setLoading]=useState<boolean>(false);
+    const {setUserName}=useContext(UserContext)!;
+
     const handleSubmit:React.FormEventHandler<HTMLFormElement>=useCallback(async(event)=>{
         try {
             event.preventDefault();
@@ -34,6 +34,7 @@ export const Login=()=>{
             })
             
             localStorage.setItem('authToken',res.data.data.token)
+            setUserName(res.data.data.user);
             navigate('/home',{replace:true});
         } catch (error) {
            const message= errorHandler(error,'Api failed');
@@ -54,7 +55,7 @@ export const Login=()=>{
 
     return (
         <div className="flex justify-center items-center h-screen">
-            <form onSubmit={handleSubmit} action="" className="flex flex-col w-[28%] p-10 rounded-2xl shadow-xl bg-gray-800">
+            <form onSubmit={handleSubmit} action="" className="flex flex-col w-full sm:w-[28%] p-10 rounded-2xl sm:bg-gray-800">
                 <div className="flex justify-center items-center font-bold text-xl"><FaGraduationCap className="text-4xl mx-2"/> CourseHub</div>
                 <div className="text-center text-xl p-4">Login to your account</div>
 

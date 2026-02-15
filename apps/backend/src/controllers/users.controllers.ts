@@ -91,9 +91,14 @@ export const userLogin=asyncHandler(async (req:Request,res:Response)=>{
         throw new ApiError(500,"Error while creating the auth token")
     }
 
+    let resUser=user.firstName;
+    resUser+=' ';
+    if(user.lastName){
+        resUser+=user.lastName;
+    }
     return res.status(200).json(
         new ApiResponse(200,{
-            user,
+            user:resUser,
             token
         },"User logged in successfully")
     )
@@ -176,7 +181,7 @@ export const getPurchasedCourses=asyncHandler(async (req:Request, res:Response)=
 
 
     //finds user by id then populate it's purchasedCourses feild with courses from Course instead of ids
-    const user=await User.findById(userId).populate({path:'purchasedCourses',populate:{path:'creator',select:'firstName lastName'}}).exec();
+    const user=await User.findById(userId).populate({path:'purchasedCourses',select:'-lessons',populate:{path:'creator',select:'firstName lastName'}}).exec();
     if(!user){
         throw new ApiError(404,"User not found")
     }

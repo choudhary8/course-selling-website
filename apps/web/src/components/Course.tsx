@@ -4,6 +4,7 @@ import { purchaseCourse } from "../services/purchaseCourse";
 import toast from "react-hot-toast";
 import { errorHandler } from "../utils/errorHandler";
 import { useLocation, useNavigate } from "react-router-dom";
+import { deleteCourse } from "../services/delete-course";
 
 export interface Iparams {
   courseId: string;
@@ -47,6 +48,10 @@ export const Course = ({
     }
   }, []);
 
+  const handleDelete=useCallback(()=>{
+    deleteCourse({courseId});
+  },[])
+
   if(loading){
     return <div className="flex items-center justify-center h-full"><div className="loader"></div></div>
   }
@@ -78,9 +83,25 @@ export const Course = ({
             Buy
           </button>
         ) : (
-          <button onClick={()=>{navigate(`../lessons-list?course=${courseId}`,{state:{from:location.pathname}})}} className="hover:bg-blue-800 text-blue-600 hover:text-white border-black p-3 mt-2 rounded-lg cursor-pointer w-full">
-              View Course
-          </button>
+          <div>
+            <button onClick={()=>{navigate(`/lessons-list?course=${courseId}`,{state:{from:location.pathname}})}} className="block bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 px-8 rounded-lg cursor-pointer mt-4 w-full">
+              View Content
+            </button>
+            {location.pathname === "/created-courses"&&<div className="mt-3 grid grid-cols-2 gap-4">
+              <button
+              onClick={handleDelete}
+              className="bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 px-8 rounded-lg cursor-pointer"
+            >
+              Delete
+            </button>
+            <button
+              onClick={()=>{navigate(`/edit-course?course=${courseId}`)}}
+              className="bg-blue-700 hover:bg-blue-800 text-white border-black border-1 p-3 px-8 rounded-lg cursor-pointer"
+            >
+              Edit
+            </button>
+            </div>}
+          </div>
         )}
       </div>
     </div>

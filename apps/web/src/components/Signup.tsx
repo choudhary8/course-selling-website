@@ -50,12 +50,12 @@ export const Signup=()=>{
       }
     return (
         <div className="flex justify-center items-center h-screen">
-            <form onSubmit={handleSubmit} action="" className="flex flex-col w-[29%] p-10 rounded-2xl shadow-xl bg-gray-800">
+            <form onSubmit={handleSubmit} action="" className="flex flex-col w-full sm:w-[29%] p-10 rounded-2xl sm:bg-gray-800">
                 <div className="flex justify-center items-center font-bold text-xl"><FaGraduationCap className="text-4xl mx-2"/> CourseHub</div>
                 <div className="text-center text-xl p-4">Welcome to CourseHub</div>
 
                 <label htmlFor="firstName">First name</label>
-                <input type="text" id="firstName" name="firstName" placeholder="Enter Your First Name" />
+                <input type="text" id="firstName" name="firstName" placeholder="Enter Your First Name" required/>
 
                 <label htmlFor="lastName">Last name</label>
                 <input type="text" name="lastName" placeholder="Enter Your Last Name" />
