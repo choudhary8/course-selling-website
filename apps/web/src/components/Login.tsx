@@ -54,7 +54,7 @@ export const Login=()=>{
       }
 
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center h-dvh">
             <form onSubmit={handleSubmit} action="" className="flex flex-col w-full sm:w-[28%] p-10 rounded-2xl sm:bg-gray-800">
                 <div className="flex justify-center items-center font-bold text-xl"><FaGraduationCap className="text-4xl mx-2"/> CourseHub</div>
                 <div className="text-center text-xl p-4">Login to your account</div>
